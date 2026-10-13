@@ -32,3 +32,12 @@ def test_celsius_to_kelvin():
 def test_unsupported_temperature_unit():
     with pytest.raises(ValueError):
         convert_temperature(20, "X", "C")
+
+
+def test_length_conversion_same_unit():
+    assert convert_length(12, "m", "m") == pytest.approx(12)
+
+
+def test_temperature_conversion_same_unit():
+    assert convert_temperature(25, "C", "C") == pytest.approx(25)
+
