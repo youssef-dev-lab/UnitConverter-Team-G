@@ -1,6 +1,12 @@
+def validate_numeric_value(value):
+    """Reject values that are not valid numbers."""
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        raise ValueError("Value must be a number")
+
 
 def convert_length(value, from_unit, to_unit):
     """Convert between meters, kilometers, miles, and feet."""
+    validate_numeric_value(value)
     factors = {
         "m": 1.0,
         "km": 1000.0,
@@ -16,6 +22,7 @@ def convert_length(value, from_unit, to_unit):
 
 def convert_temperature(value, from_unit, to_unit):
     """Convert between Celsius, Fahrenheit, and Kelvin."""
+    validate_numeric_value(value)
     to_celsius = {
         "C": lambda x: x,
         "F": lambda x: (x - 32) * 5 / 9,
