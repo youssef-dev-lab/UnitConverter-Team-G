@@ -1,6 +1,5 @@
 
 import pytest
-
 from converter import convert_weight
 
 
@@ -17,5 +16,37 @@ def test_grams_to_pounds():
 
 
 def test_unsupported_weight_unit():
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="Unsupported weight unit"):
         convert_weight(5, "stone", "kg")
+
+
+def test_weight_rejects_string():
+    with pytest.raises(ValueError, match="Value must be a number"):
+        convert_weight("abc", "kg", "g")
+
+
+def test_weight_rejects_boolean():
+    with pytest.raises(ValueError, match="Value must be a number"):
+        convert_weight(True, "kg", "g")
+
+
+def test_weight_rejects_nan():
+    with pytest.raises(ValueError, match="Value must be finite"):
+        convert_weight(float("nan"), "kg", "g")
+
+
+def test_weight_rejects_infinity():
+    with pytest.raises(ValueError, match="Value must be finite"):
+        convert_weight(float("inf"), "kg", "g")
+
+
+def test_zero_weight():
+    assert convert_weight(0, "kg", "g") == pytest.approx(0)
+
+
+def test_negative_weight():
+    assert convert_weight(-2, "kg", "g") == pytest.approx(-2000)
+
+
+def test_same_unit_conversion():
+    assert convert_weight(5, "kg", "kg") == pytest.approx(5)
