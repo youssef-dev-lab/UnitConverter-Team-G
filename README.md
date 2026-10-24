@@ -17,4 +17,4 @@ Run the tests using:
 python -m pytest -v
 ```
 
-## Project status: Development in progress.
+## Project status: Length and temperature conversion implemented.
