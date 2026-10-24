@@ -1,83 +1,117 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Unit Converter | Team G</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10192d">
+  <meta name="description" content="A fast, free length, temperature, and weight converter by Software Engineering Team G.">
+  <title>Unitwise — Unit Converter</title>
   <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f3f6fb;
-      color: #172033;
-    }
-    header {
-      background: #14213d;
-      color: white;
-      padding: 28px 8%;
-    }
-    header h1 { margin: 0 0 8px; }
-    header p { margin: 0; color: #d9e2f2; }
-    main { max-width: 950px; margin: 40px auto; padding: 0 20px; }
-    .intro, .card {
-      background: white;
-      border-radius: 14px;
-      padding: 26px;
-      margin-bottom: 22px;
-      box-shadow: 0 5px 20px #1720330d;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 18px;
-    }
-    .card h3 { color: #2563eb; margin-top: 0; }
-    .tag {
-      display: inline-block;
-      background: #e8efff;
-      color: #1d4ed8;
-      padding: 6px 10px;
-      border-radius: 20px;
-      font-size: 13px;
-    }
-    a { color: #2563eb; }
-    footer { text-align: center; padding: 24px; color: #667085; }
+    :root { color-scheme: light; --ink:#15213a; --muted:#6b7890; --line:#e1e7f0; --blue:#365df5; --blue-dark:#2646ca; --paper:#f4f7fc; --white:#fff; --green:#167a52; --red:#bd3345; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font-family:Inter, ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; }
+    .topbar { display:flex; align-items:center; justify-content:space-between; max-width:1120px; padding:22px 26px; margin:auto; }
+    .brand { display:flex; align-items:center; gap:10px; color:var(--ink); text-decoration:none; font-size:18px; font-weight:800; letter-spacing:-.04em; }
+    .mark { width:34px; height:34px; display:grid; place-items:center; border-radius:11px; color:white; background:var(--blue); font-size:20px; }
+    .topbar a.source { text-decoration:none; color:var(--muted); font-size:13px; font-weight:650; }
+    main { max-width:1120px; margin:24px auto 76px; padding:0 26px; }
+    .hero { text-align:center; margin:32px 0 35px; }
+    .eyebrow { display:inline-flex; align-items:center; gap:8px; padding:7px 12px; border:1px solid #dce5ff; border-radius:99px; background:#edf2ff; color:#3655cc; font-size:11px; font-weight:750; letter-spacing:.09em; text-transform:uppercase; }
+    .dot { width:7px; height:7px; border-radius:50%; background:#42a87a; }
+    h1 { margin:17px 0 10px; font-size:clamp(36px,6vw,58px); line-height:1.04; letter-spacing:-.06em; }
+    .hero p { max-width:570px; margin:0 auto; color:var(--muted); font-size:16px; line-height:1.65; }
+    .workspace { display:grid; grid-template-columns: minmax(0,1fr) 270px; gap:20px; align-items:start; }
+    .panel,.side-card { border:1px solid var(--line); border-radius:20px; background:var(--white); box-shadow:0 14px 38px #1f35600a; }
+    .panel { padding:24px; }
+    .tabs { display:grid; grid-template-columns:repeat(3,1fr); gap:5px; padding:5px; border-radius:13px; background:#f1f4f9; }
+    .tab { border:0; border-radius:9px; padding:12px 8px; color:#68758b; background:transparent; font:inherit; font-size:14px; font-weight:700; cursor:pointer; transition:.18s ease; }
+    .tab[aria-selected="true"] { color:#213bba; background:#fff; box-shadow:0 2px 7px #182b5015; }
+    .tab:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible { outline:3px solid #8fa4ff; outline-offset:2px; }
+    .convert-area { padding-top:26px; }
+    .field-label { display:block; margin-bottom:9px; color:#58657a; font-size:12px; font-weight:750; letter-spacing:.06em; text-transform:uppercase; }
+    .input-row { display:grid; grid-template-columns:minmax(0,1fr) 155px; gap:12px; }
+    input,select { width:100%; min-height:54px; border:1px solid var(--line); border-radius:11px; padding:0 14px; color:var(--ink); background:#fff; font:inherit; font-size:16px; }
+    input { font-variant-numeric:tabular-nums; }
+    select { cursor:pointer; }
+    .pair { display:grid; grid-template-columns:1fr 46px 1fr; gap:14px; align-items:end; margin-top:20px; }
+    .swap { width:44px; height:44px; margin-bottom:5px; border:1px solid var(--line); border-radius:50%; color:#4356b7; background:white; font-size:20px; cursor:pointer; transition:transform .2s ease,background .2s ease; }
+    .swap:hover { transform:rotate(180deg); background:#f1f4ff; }
+    .convert-button { width:100%; min-height:52px; margin-top:24px; border:0; border-radius:11px; color:#fff; background:var(--blue); font:inherit; font-size:15px; font-weight:750; cursor:pointer; box-shadow:0 8px 16px #365df52b; transition:background .15s,transform .15s; }
+    .convert-button:hover { background:var(--blue-dark); transform:translateY(-1px); }
+    .result { min-height:96px; display:flex; flex-direction:column; justify-content:center; margin-top:18px; padding:18px 20px; border:1px solid #dfe7ff; border-radius:13px; background:#f6f8ff; }
+    .result-label { color:#74809a; font-size:11px; font-weight:750; letter-spacing:.08em; text-transform:uppercase; }
+    .result-value { margin-top:5px; overflow-wrap:anywhere; color:#2036a0; font-size:clamp(23px,4vw,32px); font-weight:800; letter-spacing:-.04em; font-variant-numeric:tabular-nums; }
+    .message { min-height:21px; margin:10px 0 0; color:var(--muted); font-size:13px; }
+    .message.error { color:var(--red); }
+    .message.success { color:var(--green); }
+    aside { display:grid; gap:14px; }
+    .side-card { padding:19px; }
+    .side-card h2 { margin:0 0 11px; font-size:14px; letter-spacing:-.02em; }
+    .side-card p { margin:0; color:var(--muted); font-size:13px; line-height:1.65; }
+    .unit-list { display:grid; gap:10px; margin:0; padding:0; list-style:none; }
+    .unit-list li { display:flex; justify-content:space-between; color:var(--muted); font-size:12px; }
+    .unit-list b { color:var(--ink); font-weight:700; }
+    .footer { margin-top:25px; color:#8b96a8; font-size:12px; text-align:center; }
+    @media(max-width:800px) { .workspace { grid-template-columns:1fr; } aside { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media(max-width:540px) { .topbar { padding:17px 18px; } main { margin-top:18px; padding:0 16px; } .hero { margin:28px 0; } .hero p { font-size:14px; } .panel { padding:16px; border-radius:16px; } .tab { font-size:12px; padding:11px 3px; } .input-row { grid-template-columns:minmax(0,1fr) 120px; gap:8px; } input,select { min-height:50px; padding:0 10px; font-size:14px; } .pair { grid-template-columns:minmax(0,1fr) 38px minmax(0,1fr); gap:8px; } .swap { width:38px; height:38px; font-size:17px; } aside { grid-template-columns:1fr; } .topbar a.source { font-size:12px; } }
+    @media(prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto !important; transition:none !important; } }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Unit Converter</h1>
-    <p>Simple, reliable unit conversion — developed by Software Engineering Team G.</p>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Unitwise home"><span class="mark" aria-hidden="true">↔</span>unitwise</a>
+    <a class="source" href="https://github.com/youssef-dev-lab/UnitConverter-Team-G" target="_blank" rel="noreferrer">View project on GitHub ↗</a>
   </header>
   <main>
-    <section class="intro">
-      <span class="tag">Python · pytest · GitHub Actions</span>
-      <h2>About the Project</h2>
-      <p>A Python application that converts values between length, temperature, and weight units, with input validation and automated tests.</p>
+    <section class="hero" aria-labelledby="title">
+      <span class="eyebrow"><span class="dot"></span>Quick conversions, clear answers</span>
+      <h1 id="title">Every unit, in its place.</h1>
+      <p>Convert length, temperature, or weight in seconds. Choose your units and get a precise, easy-to-read result.</p>
     </section>
-    <h2>Supported Conversions</h2>
-    <section class="grid">
-      <article class="card">
-        <h3>Length</h3>
-        <p>Convert between meters, kilometers, miles, and feet.</p>
-      </article>
-      <article class="card">
-        <h3>Temperature</h3>
-        <p>Convert between Celsius, Fahrenheit, and Kelvin.</p>
-      </article>
-      <article class="card">
-        <h3>Weight</h3>
-        <p>Convert between kilograms, grams, and pounds.</p>
-      </article>
-    </section>
-    <section class="intro">
-      <h2>Quality & Testing</h2>
-      <p>Automated tests are run with pytest through GitHub Actions to check conversion behavior and input validation.</p>
-      <p><a href="https://github.com/youssef-dev-lab/UnitConverter-Team-G">View the source code on GitHub →</a></p>
-    </section>
+    <div class="workspace">
+      <section class="panel" aria-label="Unit converter">
+        <div class="tabs" role="tablist" aria-label="Conversion category">
+          <button class="tab" type="button" role="tab" aria-selected="true" data-category="length">↗ &nbsp;Length</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-category="temperature">☼ &nbsp;Temperature</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-category="weight">◉ &nbsp;Weight</button>
+        </div>
+        <form id="converter" class="convert-area" novalidate>
+          <label class="field-label" for="amount">Amount to convert</label>
+          <div class="input-row">
+            <input id="amount" name="amount" type="number" inputmode="decimal" step="any" placeholder="Enter a value" value="1" required>
+            <select id="from-unit" aria-label="Convert from"></select>
+          </div>
+          <div class="pair">
+            <div><label class="field-label" for="to-unit">Convert to</label><select id="to-unit" aria-label="Convert to"></select></div>
+            <button class="swap" id="swap" type="button" aria-label="Swap units" title="Swap units">⇄</button>
+            <div aria-hidden="true"><span class="field-label">Result unit</span><div id="destination-label" style="min-height:54px;display:flex;align-items:center;color:#6b7890;font-size:13px"></div></div>
+          </div>
+          <button class="convert-button" type="submit">Convert value <span aria-hidden="true">→</span></button>
+          <div class="result" aria-live="polite" aria-atomic="true"><span class="result-label">Converted result</span><output class="result-value" id="result">1 m</output></div>
+          <p class="message" id="message" role="status"></p>
+        </form>
+      </section>
+      <aside>
+        <section class="side-card"><h2>Built for everyday math</h2><p>Fast, straightforward conversions with familiar units and helpful validation when an input needs attention.</p></section>
+        <section class="side-card"><h2 id="units-heading">Length units</h2><ul class="unit-list" id="unit-list"></ul></section>
+        <section class="side-card"><h2>About the project</h2><p>Software Engineering Team G · Python · pytest · GitHub Actions</p></section>
+      </aside>
+    </div>
+    <footer class="footer">Software Engineering · Team G · Unitwise Converter</footer>
   </main>
-  <footer>Software Engineering · Team G · Unit Converter</footer>
+  <script>
+    const categories = {
+      length: { title:'Length', units:{ m:'Meters (m)', km:'Kilometers (km)', mi:'Miles (mi)', ft:'Feet (ft)' }, factors:{m:1,km:1000,mi:1609.344,ft:.3048}, convert:(v,a,b)=>v*categories.length.factors[a]/categories.length.factors[b] },
+      temperature: { title:'Temperature', units:{ C:'Celsius (°C)', F:'Fahrenheit (°F)', K:'Kelvin (K)' }, convert:(v,a,b)=>{const c=a==='C'?v:a==='F'?(v-32)*5/9:v-273.15;if(c < -273.15) throw Error('Temperature cannot be below absolute zero.');return b==='C'?c:b==='F'?c*9/5+32:c+273.15;} },
+      weight: { title:'Weight', units:{ kg:'Kilograms (kg)', g:'Grams (g)', lb:'Pounds (lb)' }, factors:{kg:1,g:.001,lb:.45359237}, convert:(v,a,b)=>v*categories.weight.factors[a]/categories.weight.factors[b] }
+    };
+    const tabs=[...document.querySelectorAll('.tab')], form=document.querySelector('#converter'), amount=document.querySelector('#amount'), from=document.querySelector('#from-unit'), to=document.querySelector('#to-unit'), result=document.querySelector('#result'), message=document.querySelector('#message'), unitList=document.querySelector('#unit-list');
+    let active='length';
+    function populate(select,units,selected){ select.replaceChildren(...Object.entries(units).map(([key,label])=>{const option=document.createElement('option');option.value=key;option.textContent=label;option.selected=key===selected;return option;})); }
+    function updateCategory(name){active=name;const category=categories[name];tabs.forEach(tab=>tab.setAttribute('aria-selected',String(tab.dataset.category===name)));populate(from,category.units,Object.keys(category.units)[0]);populate(to,category.units,Object.keys(category.units)[1]||Object.keys(category.units)[0]);document.querySelector('#units-heading').textContent=category.title+' units';unitList.replaceChildren(...Object.entries(category.units).map(([key,label])=>{const li=document.createElement('li'),b=document.createElement('b');li.textContent=label.replace(/\s\(.+\)$/,'');b.textContent=key;li.append(b);return li;}));message.textContent='';message.className='message';convert();}
+    function format(value){return new Intl.NumberFormat(undefined,{maximumSignificantDigits:10}).format(value);}
+    function convert(){const category=categories[active],value=amount.value.trim();document.querySelector('#destination-label').textContent=to.options[to.selectedIndex]?.textContent||'';if(value===''){result.textContent='—';message.textContent='Enter a number to convert.';message.className='message error';return;}const numeric=Number(value);if(!Number.isFinite(numeric)){result.textContent='—';message.textContent='Enter a finite number.';message.className='message error';return;}try{const converted=category.convert(numeric,from.value,to.value);if(!Number.isFinite(converted))throw Error('That value is too large to convert safely.');const unit=to.value;result.textContent=`${format(converted)} ${unit}`;message.textContent=`${format(numeric)} ${from.value} = ${format(converted)} ${unit}`;message.className='message success';}catch(error){result.textContent='—';message.textContent=error.message;message.className='message error';}}
+    tabs.forEach(tab=>tab.addEventListener('click',()=>updateCategory(tab.dataset.category)));form.addEventListener('submit',event=>{event.preventDefault();convert();});amount.addEventListener('input',convert);from.addEventListener('change',convert);to.addEventListener('change',convert);document.querySelector('#swap').addEventListener('click',()=>{const old=from.value;from.value=to.value;to.value=old;convert();});updateCategory(active);
+  </script>
 </body>
 </html>
