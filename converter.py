@@ -37,8 +37,11 @@ def convert_weight(value, from_unit, to_unit):
     if isinstance(value, bool) or not isinstance(value, (int, float)):
         raise ValueError("Value must be a number")
 
-    if not math.isfinite(value):
-        raise ValueError("Value must be finite")
+    try:
+        if not math.isfinite(value):
+            raise ValueError("Value must be finite")
+    except OverflowError:
+            raise ValueError("Value must be finite") from None
 
     factors = {
         "kg": 1.0,

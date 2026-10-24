@@ -50,3 +50,7 @@ def test_negative_weight():
 
 def test_same_unit_conversion():
     assert convert_weight(5, "kg", "kg") == pytest.approx(5)
+
+def test_weight_rejects_extremely_large_integer():
+    with pytest.raises(ValueError, match="Value must be finite"):
+        convert_weight(10**10000, "kg", "g")
