@@ -17,4 +17,4 @@ Run the tests using:
 python -m pytest -v
 ```
 
-## Project status: Weight conversion implemented.
+## Project status: Length, temperature, and weight conversion implemented.
