@@ -4,12 +4,80 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Unit Converter</title>
+  <title>Unit Converter | Team G</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f6fb;
+      color: #172033;
+    }
+    header {
+      background: #14213d;
+      color: white;
+      padding: 28px 8%;
+    }
+    header h1 { margin: 0 0 8px; }
+    header p { margin: 0; color: #d9e2f2; }
+    main { max-width: 950px; margin: 40px auto; padding: 0 20px; }
+    .intro, .card {
+      background: white;
+      border-radius: 14px;
+      padding: 26px;
+      margin-bottom: 22px;
+      box-shadow: 0 5px 20px #1720330d;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+    }
+    .card h3 { color: #2563eb; margin-top: 0; }
+    .tag {
+      display: inline-block;
+      background: #e8efff;
+      color: #1d4ed8;
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-size: 13px;
+    }
+    a { color: #2563eb; }
+    footer { text-align: center; padding: 24px; color: #667085; }
+  </style>
 </head>
 <body>
-  <h1>Unit Converter</h1>
-  <p>A Python project for converting length, temperature, and weight.</p>
-  <p>Automated tests are run using pytest and GitHub Actions.</p>
+  <header>
+    <h1>Unit Converter</h1>
+    <p>Simple, reliable unit conversion — developed by Software Engineering Team G.</p>
+  </header>
+  <main>
+    <section class="intro">
+      <span class="tag">Python · pytest · GitHub Actions</span>
+      <h2>About the Project</h2>
+      <p>A Python application that converts values between length, temperature, and weight units, with input validation and automated tests.</p>
+    </section>
+    <h2>Supported Conversions</h2>
+    <section class="grid">
+      <article class="card">
+        <h3>Length</h3>
+        <p>Convert between meters, kilometers, miles, and feet.</p>
+      </article>
+      <article class="card">
+        <h3>Temperature</h3>
+        <p>Convert between Celsius, Fahrenheit, and Kelvin.</p>
+      </article>
+      <article class="card">
+        <h3>Weight</h3>
+        <p>Convert between kilograms, grams, and pounds.</p>
+      </article>
+    </section>
+    <section class="intro">
+      <h2>Quality & Testing</h2>
+      <p>Automated tests are run with pytest through GitHub Actions to check conversion behavior and input validation.</p>
+      <p><a href="https://github.com/youssef-dev-lab/UnitConverter-Team-G">View the source code on GitHub →</a></p>
+    </section>
+  </main>
+  <footer>Software Engineering · Team G · Unit Converter</footer>
 </body>
 </html>
-
